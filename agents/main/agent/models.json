@@ -1,0 +1,28 @@
+{
+  "providers": {
+    "custom-api-minimaxi-com": {
+      "baseUrl": "https://api.minimaxi.com/v1",
+      "apiKey": "sk-cp-WQtqe7CDK4N3wn9tPz8DTbjTim8PIfsRW69M1PmPwd7mQvVfLQDN_xH7cEGq4sgw3dhI2vZZIC6EyCT3MzEhbQbcLHzug_u-wP1u6bf6y6H5_a6yJR1BCLw",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "MiniMax-M2.5",
+          "name": "MiniMax-M2.5 (Custom Provider)",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 204800,
+          "maxTokens": 200000,
+          "api": "openai-completions"
+        }
+      ]
+    }
+  }
+}
