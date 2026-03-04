@@ -26,7 +26,8 @@
         "channel": "webchat"
       },
       "state": {
-        "nextRunAtMs": 1772650800000
+        "nextRunAtMs": 1772650800000,
+        "runningAtMs": 1772650800001
       }
     }
   ]
