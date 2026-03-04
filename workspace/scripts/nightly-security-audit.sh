@@ -224,18 +224,32 @@ echo ""
 # ========== 13. 大脑灾备自动同步 ==========
 echo "[13/13] 大脑灾备同步..."
 cd "$OC" || exit 1
-if git rev-parse --git-dir &>/dev/null; then
+
+# 检查是否是 git 仓库
+if ! git rev-parse --git-dir &>/dev/null; then
+    RESULTS+=("⚠️ 灾备备份: Git 未初始化")
+else
+    # 本地提交
     git add -A 2>/dev/null
     GIT_STATUS=$(git diff --cached --stat 2>/dev/null || echo "")
     if [ -n "$GIT_STATUS" ]; then
         git commit -m "巡检自动备份 $DATE" 2>/dev/null
-        git push origin main 2>/dev/null || git push origin master 2>/dev/null
-        RESULTS+=("✅ 灾备备份: 已推送至 Git")
+        echo "已提交本地: $GIT_STATUS"
+        
+        # 检查是否有远程仓库
+        if git remote -v | grep -q "origin"; then
+            git push origin main 2>/dev/null || git push origin master 2>/dev/null
+            if [ $? -eq 0 ]; then
+                RESULTS+=("✅ 灾备备份: 已推送至 Git")
+            else
+                RESULTS+=("⚠️ 灾备备份: 推送失败（本地已提交）")
+            fi
+        else
+            RESULTS+=("⚠️ 灾备备份: 无远程仓库（本地已提交）")
+        fi
     else
         RESULTS+=("✅ 灾备备份: 无变更，跳过")
     fi
-else
-    RESULTS+=("⚠️ 灾备备份: Git 仓库未配置")
 fi
 echo ""
 
